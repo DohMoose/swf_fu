@@ -99,7 +99,13 @@ class SwfFuTest < ActionView::TestCase
       should "produce the expected code" do
         assert_same_stripped DYNAMIC_RESULT, swf_tag("mySwf", COMPLEX_OPTIONS)
       end
-      
+    end
+    
+    context "with a flash file starting with an integer" do
+      should "prepend a character string" do
+        div_result = "<div id=\"swf_123_div\">"
+        assert_match /#{div_result}/, swf_tag("123")
+      end
     end
     
     should "treat initialize arrays as list of parameters" do

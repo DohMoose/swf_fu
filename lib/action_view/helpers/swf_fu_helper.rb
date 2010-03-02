@@ -66,6 +66,10 @@ module ActionView #:nodoc:
           options.reverse_merge!(DEFAULTS)
           options[:id] ||= source.gsub(/^.*\//, '').gsub(/\.swf$/,'')
           options[:div_id] ||= options[:id]+"_div"
+          # IE 8 flips out with divs not starting with a character
+          unless options[:div_id] =~ /^[a-z]/i  
+            options[:div_id] = "swf_" + options[:div_id]
+          end
           options[:width], options[:height] = options[:size].scan(/^(\d*%?)x(\d*%?)$/).first if options[:size]
           options[:auto_install] &&= @view.swf_path(options[:auto_install])
           options[:flashvars][:id] ||= options[:id]
